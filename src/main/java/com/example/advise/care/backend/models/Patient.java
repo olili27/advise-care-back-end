@@ -3,6 +3,9 @@ package com.example.advise.care.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Entity
 @Builder
@@ -16,4 +19,15 @@ public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
+
+    String username;
+
+    @Column(unique = true)
+    String emailId;
+
+    String password;
+
+    String imageUrl;
+    @CreatedDate
+    Date dateJoined;
 }
