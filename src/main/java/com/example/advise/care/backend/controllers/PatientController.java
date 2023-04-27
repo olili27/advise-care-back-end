@@ -18,15 +18,15 @@ public class PatientController {
     @Autowired
     PatientService patientService;
 
-    @PostMapping("/patient-signup")
+    @PostMapping("/signup")
     public ResponseEntity patientSignup(@RequestBody PatientSignUpDto patientSignUpDto) throws Exception {
 
        try{
-           String patientName = patientService.patientSignUp(patientSignUpDto);
+           PatientSignUpResponseDto patientSignUpResponseDto = patientService.patientSignUp(patientSignUpDto);
 
-           return new ResponseEntity<>(patientName, HttpStatus.CREATED);
+           return new ResponseEntity<>(patientSignUpResponseDto, HttpStatus.CREATED);
        } catch (Exception e) {
-           return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+           return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
 
     }

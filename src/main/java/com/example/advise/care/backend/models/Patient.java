@@ -3,7 +3,7 @@ package com.example.advise.care.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -28,6 +28,6 @@ public class Patient {
     String password;
 
     String imageUrl;
-    @CreatedDate
+    @CreationTimestamp
     Date dateJoined;
 }

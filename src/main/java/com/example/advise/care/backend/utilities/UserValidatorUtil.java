@@ -5,7 +5,7 @@ import com.example.advise.care.backend.exceptions.*;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class PatientValidatorUtil {
+public class UserValidatorUtil {
     public static void validatePatientSignUpDto(PatientSignUpDto patientSignUpDto) throws Exception {
         if(patientSignUpDto.getEmailId().trim().equals("") || patientSignUpDto.getEmailId().equals(null)) {
             throw new MissingEmailException("Email field is empty");
@@ -30,5 +30,11 @@ public class PatientValidatorUtil {
         if(password.trim().length() < 8) {
             throw new InvalidPasswordLengthException("The password should be of 8 or more characters");
         }
+    }
+
+    public static boolean validateUserPassword(String loginPassword, String dbStoredPassword) throws Exception {
+        if(loginPassword.trim().equals(dbStoredPassword)) return true;
+
+        throw new WrongPasswordException("Password is incorrect");
     }
 }
