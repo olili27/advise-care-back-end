@@ -9,5 +9,7 @@ public interface PatientService {
 
     public UserLoginResponseDto findPatientByEmailId(String emailId) throws Exception;
 
-    public boolean loginUser(String emailId, String password) throws Exception;
+    public boolean loginPatient(String emailId, String password) throws Exception;
+
+    public boolean isPatientPresent(String emailId) throws Exception;
 }

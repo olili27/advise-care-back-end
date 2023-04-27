@@ -71,7 +71,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public boolean loginUser(String emailId, String password) throws Exception {
+    public boolean loginPatient(String emailId, String password) throws Exception {
 
         try {
             UserLoginResponseDto userLoginResponseDto = findPatientByEmailId(emailId);
@@ -84,5 +84,11 @@ public class PatientServiceImpl implements PatientService {
         catch (WrongPasswordException e) {
             throw new WrongPasswordException("Password is incorrect");
         }
+    }
+
+    @Override
+    public boolean isPatientPresent(String emailId) {
+
+        return patientRepository.findByEmailId(emailId) == null;
     }
 }
