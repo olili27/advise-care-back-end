@@ -1,7 +1,7 @@
 package com.example.advise.care.backend.controllers;
 
-import com.example.advise.care.backend.DTOs.requests.patient.PatientSignUpDto;
-import com.example.advise.care.backend.DTOs.responses.patients.PatientSignUpResponseDto;
+import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
+import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.services.interfaces.PatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/patient")
 public class PatientController {
 
+    /*
+    TODO
+    validate email -> ensure it is a right email
+     */
+
     @Autowired
     PatientService patientService;
 
     @PostMapping("/signup")
-    public ResponseEntity patientSignup(@RequestBody PatientSignUpDto patientSignUpDto) throws Exception {
+    public ResponseEntity<?> patientSignup(@RequestBody PatientSignUpDto patientSignUpDto) throws Exception {
 
        try{
            PatientSignUpResponseDto patientSignUpResponseDto = patientService.patientSignUp(patientSignUpDto);

@@ -3,31 +3,21 @@ package com.example.advise.care.backend.models;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@DiscriminatorValue("patient")
 @Table(name = "patients")
-public class Patient {
+public class Patient extends User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+    int age;
 
-    String username;
-
-    @Column(unique = true)
-    String emailId;
-
-    String password;
-
-    String imageUrl;
-    @CreationTimestamp
-    Date dateJoined;
+    @ManyToMany(mappedBy = "patients", cascade = CascadeType.ALL)
+    List<Doctor> doctors = new ArrayList<>();
 }

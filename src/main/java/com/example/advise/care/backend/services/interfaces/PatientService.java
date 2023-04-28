@@ -1,15 +1,9 @@
 package com.example.advise.care.backend.services.interfaces;
 
-import com.example.advise.care.backend.DTOs.requests.patient.PatientSignUpDto;
-import com.example.advise.care.backend.DTOs.responses.patients.PatientSignUpResponseDto;
-import com.example.advise.care.backend.DTOs.responses.user.UserLoginResponseDto;
+import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
+import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
+import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
 
 public interface PatientService {
     public PatientSignUpResponseDto patientSignUp(PatientSignUpDto patientSignUpDto) throws Exception;
-
-    public UserLoginResponseDto findPatientByEmailId(String emailId) throws Exception;
-
-    public boolean loginPatient(String emailId, String password) throws Exception;
-
-    public boolean isPatientPresent(String emailId) throws Exception;
 }

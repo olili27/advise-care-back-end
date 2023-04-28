@@ -5,9 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Builder
@@ -15,26 +13,24 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "posts")
-public class Post {
+@Table(name = "post_views")
+public class PostView {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    String title;
-
-    String body;
-
-    String imageUrl;
+    @ManyToOne
+    @JoinColumn
+    User user;
 
     @CreationTimestamp
-    Date createdAt;
+    Date viewedAt;
 
     @ManyToOne
     @JoinColumn
-    Doctor author;
+    Post post;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    List<PostView> postViewList = new ArrayList<>();
+
 }
+

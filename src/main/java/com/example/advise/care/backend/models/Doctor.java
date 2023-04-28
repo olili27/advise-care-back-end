@@ -6,34 +6,32 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@DiscriminatorValue("doctor")
 @Table(name = "doctors")
-public class Doctor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+public class Doctor extends User {
 
     String firstName;
 
     String lastName;
 
-    String emailId;
-
-    String password;
-
     @Enumerated(EnumType.STRING)
     DoctorSpeciality doctorSpeciality;
 
-    String imageUrl;
+    String contactNumber;
 
-    @CreationTimestamp
-    Date dateJoined;
+    @ManyToMany
+    @JoinColumn
+    List<Patient> patients = new ArrayList<>();
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    List<Post> posts = new ArrayList<>();
 }

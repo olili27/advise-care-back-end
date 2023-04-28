@@ -1,4 +1,4 @@
-package com.example.advise.care.backend.DTOs.responses.patients;
+package com.example.advise.care.backend.dtos.responses.patients;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,5 +10,5 @@ import lombok.experimental.FieldDefaults;
 @Builder
 public class PatientSignUpResponseDto {
 
-    String username;
+    String emailId;
 }

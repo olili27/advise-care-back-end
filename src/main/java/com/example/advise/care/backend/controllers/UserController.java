@@ -1,43 +1,56 @@
 package com.example.advise.care.backend.controllers;
 
+import com.example.advise.care.backend.dtos.requests.UserLoginRequestDto;
+import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
 import com.example.advise.care.backend.exceptions.EmailIdNotFoundException;
 import com.example.advise.care.backend.services.interfaces.DoctorService;
 import com.example.advise.care.backend.services.interfaces.PatientService;
+import com.example.advise.care.backend.services.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    PatientService patientService;
-
-    @Autowired
-    DoctorService doctorService;
+    UserService userService;
 
     @GetMapping("/login")
-    public ResponseEntity userLogin(@RequestParam("emailId") String emailId, @RequestParam("password") String password) throws Exception {
+    public ResponseEntity<?> userLogin(@RequestBody UserLoginRequestDto userLoginRequestDto) throws Exception {
 
         try {
-            if(patientService.isPatientPresent(emailId)) {
-                boolean canPatientLogin = patientService.loginPatient(emailId, password);
+            UserLoginResponseDto userLoginResponseDto = userService.userLogin(userLoginRequestDto);
 
-                return new ResponseEntity<>(canPatientLogin, HttpStatus.OK);
-            }
-            else if(doctorService.isDoctorPresent(emailId)) {
-                boolean canDoctorLogin = doctorService.loginDoctor(emailId, password);
+            return new ResponseEntity<>(userLoginResponseDto, HttpStatus.OK);
+        }
+        catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
-                return new ResponseEntity<>(canDoctorLogin, HttpStatus.OK);
-            } else {
-                throw new EmailIdNotFoundException("Email not found");
-            }
-        } catch(Exception e) {
+    @GetMapping("/forgot-password")
+    public ResponseEntity<?> userForgotPassword(@RequestParam("emailId") String emailId) throws Exception {
+
+        try {
+            String success = userService.userForgotPassword(emailId);
+
+            return new ResponseEntity<>(success, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/forgot-password/{id}/reset")
+    public ResponseEntity<?> resetUserPassword(@PathVariable("id") String id, @RequestParam("newPassword") String newPassword) throws Exception {
+
+        try {
+            String success = userService.resetUserPassword(id, newPassword);
+
+            return new ResponseEntity<>(success, HttpStatus.CREATED);
+        } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

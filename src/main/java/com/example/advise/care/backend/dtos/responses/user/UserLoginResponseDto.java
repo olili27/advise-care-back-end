@@ -1,4 +1,4 @@
-package com.example.advise.care.backend.DTOs.responses.user;
+package com.example.advise.care.backend.dtos.responses.user;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,4 +13,6 @@ public class UserLoginResponseDto {
     String emailId;
 
     String password;
+
+    String gender;
 }

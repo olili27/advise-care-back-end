@@ -1,13 +1,14 @@
 package com.example.advise.care.backend.services.implementations;
 
-import com.example.advise.care.backend.DTOs.requests.patient.PatientSignUpDto;
-import com.example.advise.care.backend.DTOs.responses.user.UserLoginResponseDto;
-import com.example.advise.care.backend.DTOs.responses.patients.PatientSignUpResponseDto;
+import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
+import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
+import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.exceptions.*;
 import com.example.advise.care.backend.models.Patient;
+import com.example.advise.care.backend.models.User;
 import com.example.advise.care.backend.repositories.PatientRepository;
 import com.example.advise.care.backend.services.interfaces.PatientService;
-import com.example.advise.care.backend.transformers.PatientTransformer;
+import com.example.advise.care.backend.transformers.UserTransformer;
 import com.example.advise.care.backend.utilities.UserValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +32,16 @@ public class PatientServiceImpl implements PatientService {
 
             UserValidatorUtil.validatePasswordLength(patientSignUpDto.getPassword());
 
-            Patient patient = PatientTransformer.patientSignUpDtoToPatientEntity(patientSignUpDto);
+            User user = UserTransformer.patientSignUpDtoToUserEntity(patientSignUpDto);
+
+            Patient patient = new Patient();
+            patient.setId(user.getId());
+            patient.setEmailId(user.getEmailId());
+            patient.setPassword(user.getPassword());
 
             Patient savedPatient = patientRepository.save(patient);
 
-            return PatientTransformer.patientEntityToPatientSignUpResponseDto(savedPatient);
+            return PatientSignUpResponseDto.builder().emailId(savedPatient.getEmailId()).build();
         }
         catch (MissingPasswordException e) {
             throw new MissingPasswordException("Password field is empty");
@@ -51,44 +57,10 @@ public class PatientServiceImpl implements PatientService {
         }
     }
 
-
     /*
     TODO
     1. handle exceptions
     2. validate if email is valid
      */
-    @Override
-    public UserLoginResponseDto findPatientByEmailId(String emailId) throws Exception {
 
-        try {
-            Patient patient = patientRepository.findByEmailId(emailId);
-
-            return PatientTransformer.patientEntityToUserLoginResponseDto(patient);
-        } catch (Exception e) {
-            throw new EmailIdNotFoundException("Email not found");
-        }
-
-    }
-
-    @Override
-    public boolean loginPatient(String emailId, String password) throws Exception {
-
-        try {
-            UserLoginResponseDto userLoginResponseDto = findPatientByEmailId(emailId);
-
-            return UserValidatorUtil.validateUserPassword(password, userLoginResponseDto.getPassword());
-
-        } catch (EmailIdNotFoundException e) {
-            throw new EmailIdNotFoundException("Email not found");
-        }
-        catch (WrongPasswordException e) {
-            throw new WrongPasswordException("Password is incorrect");
-        }
-    }
-
-    @Override
-    public boolean isPatientPresent(String emailId) {
-
-        return patientRepository.findByEmailId(emailId) == null;
-    }
 }
