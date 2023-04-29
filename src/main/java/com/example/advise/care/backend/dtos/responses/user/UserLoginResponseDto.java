@@ -12,7 +12,5 @@ public class UserLoginResponseDto {
 
     String emailId;
 
-    String password;
-
     String gender;
 }

@@ -3,6 +3,7 @@ package com.example.advise.care.backend.controllers;
 import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
 import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.services.interfaces.PatientService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class PatientController {
     PatientService patientService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> patientSignup(@RequestBody PatientSignUpDto patientSignUpDto) throws Exception {
+    public ResponseEntity<?> patientSignup(@Valid  @RequestBody PatientSignUpDto patientSignUpDto) throws Exception {
 
        try{
            PatientSignUpResponseDto patientSignUpResponseDto = patientService.patientSignUp(patientSignUpDto);

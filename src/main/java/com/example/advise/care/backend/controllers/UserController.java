@@ -2,10 +2,8 @@ package com.example.advise.care.backend.controllers;
 
 import com.example.advise.care.backend.dtos.requests.UserLoginRequestDto;
 import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
-import com.example.advise.care.backend.exceptions.EmailIdNotFoundException;
-import com.example.advise.care.backend.services.interfaces.DoctorService;
-import com.example.advise.care.backend.services.interfaces.PatientService;
 import com.example.advise.care.backend.services.interfaces.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +17,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/login")
-    public ResponseEntity<?> userLogin(@RequestBody UserLoginRequestDto userLoginRequestDto) throws Exception {
+    public ResponseEntity<?> userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto) throws Exception {
 
         try {
             UserLoginResponseDto userLoginResponseDto = userService.userLogin(userLoginRequestDto);
@@ -32,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/forgot-password")
-    public ResponseEntity<?> userForgotPassword(@RequestParam("emailId") String emailId) throws Exception {
+    public ResponseEntity<?> userForgotPassword(@Valid @RequestParam("emailId") String emailId) throws Exception {
 
         try {
             String success = userService.userForgotPassword(emailId);

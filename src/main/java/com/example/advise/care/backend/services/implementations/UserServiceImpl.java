@@ -2,9 +2,7 @@ package com.example.advise.care.backend.services.implementations;
 
 import com.example.advise.care.backend.dtos.requests.UserLoginRequestDto;
 import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
-import com.example.advise.care.backend.exceptions.EmailIdNotFoundException;
-import com.example.advise.care.backend.exceptions.UserNotFoundException;
-import com.example.advise.care.backend.exceptions.WrongPasswordException;
+import com.example.advise.care.backend.exceptions.*;
 import com.example.advise.care.backend.models.User;
 import com.example.advise.care.backend.repositories.UserRepository;
 import com.example.advise.care.backend.services.interfaces.UserService;
@@ -16,7 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -32,16 +32,27 @@ public class UserServiceImpl implements UserService {
     public UserLoginResponseDto userLogin(UserLoginRequestDto userLoginRequestDto) throws Exception {
 
         try{
+            if(userLoginRequestDto.getEmailId() == null || userLoginRequestDto.getEmailId().trim().equals("")) throw new MissingEmailException("Email field is empty");
+            else if(userLoginRequestDto.getPassword() == null || userLoginRequestDto.getPassword().trim().equals("")) throw  new MissingPasswordException("Password field is empty");
+
             User user = userRepository.findByEmailId(userLoginRequestDto.getEmailId());
 
-            if(UserValidatorUtil.validateUserPassword(userLoginRequestDto.getPassWord(), user.getPassword())) return UserTransformer.userEntityToUserLoginResponseDto(user);
+            if(user == null) throw new EmailIdNotFoundException("Email not found");
+
+            if(!UserValidatorUtil.validateUserPassword(userLoginRequestDto.getPassword(), user.getPassword())) throw new WrongPasswordException("Password is incorrect");
+
+            return UserTransformer.userEntityToUserLoginResponseDto(user);
+        }
+        catch (MissingPasswordException e) {
+            throw new MissingPasswordException("Password field is empty");
         }
         catch (WrongPasswordException e) {
             throw new WrongPasswordException("Password is incorrect");
+        } catch (MissingEmailException e) {
+            throw new MissingEmailException("Email field is empty");
+        } catch (EmailIdNotFoundException e) {
+            throw new EmailIdNotFoundException("Email not found");
         }
-
-        throw new EmailIdNotFoundException("Email not found");
-
     }
 
     public void sendEmail(String to, String subject, String body) throws MessagingException {

@@ -12,40 +12,4 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class DoctorServiceImpl implements DoctorService {
 
-    @Autowired
-    DoctorRepository doctorRepository;
-
-    @Override
-    public UserLoginResponseDto findDoctorByEmailId(String emailId) throws Exception {
-
-        try {
-            Doctor doctor = doctorRepository.findByEmailId(emailId);
-
-            return DoctorTransformer.doctorEntityToUserLoginResponseDto(doctor);
-        } catch (Exception e) {
-            throw new EmailIdNotFoundException("Email not found");
-        }
-
-    }
-
-    @Override
-    public boolean loginDoctor(String emailId, String password) throws Exception {
-
-        try {
-            UserLoginResponseDto userLoginResponseDto = findDoctorByEmailId(emailId);
-
-            return UserValidatorUtil.validateUserPassword(password, userLoginResponseDto.getPassword());
-        } catch (EmailIdNotFoundException e) {
-            throw new EmailIdNotFoundException("Email not found");
-        }
-        catch (WrongPasswordException e) {
-            throw new WrongPasswordException("Password is incorrect");
-        }
-    }
-
-    @Override
-    public boolean isDoctorPresent(String emailId) throws Exception {
-
-       return doctorRepository.findByEmailId(emailId) == null;
-    }
 }

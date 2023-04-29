@@ -6,11 +6,9 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-@Builder
-@FieldDefaults(level = AccessLevel.PRIVATE)
-@AllArgsConstructor
-@NoArgsConstructor
-public class ForgotPasswordDto {
-
-
-}
+//@Builder
+//@FieldDefaults(level = AccessLevel.PRIVATE)
+//@AllArgsConstructor
+//@NoArgsConstructor
+//public class ForgotPasswordDto {
+//}

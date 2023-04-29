@@ -11,7 +11,6 @@ public class UserTransformer {
     public static UserLoginResponseDto userEntityToUserLoginResponseDto(User user) {
         return UserLoginResponseDto.builder()
                 .emailId(user.getEmailId())
-                .gender(user.getGender())
                 .build();
     }
 

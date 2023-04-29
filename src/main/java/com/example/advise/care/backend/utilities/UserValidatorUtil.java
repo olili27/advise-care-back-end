@@ -7,15 +7,15 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class UserValidatorUtil {
     public static void validatePatientSignUpDto(PatientSignUpDto patientSignUpDto) throws Exception {
-        if(patientSignUpDto.getEmailId().trim().equals("") || patientSignUpDto.getEmailId().equals(null)) {
+        if(patientSignUpDto.getEmailId() == null ||patientSignUpDto.getEmailId().trim().equals("")) {
             throw new MissingEmailException("Email field is empty");
         }
 
-        if(patientSignUpDto.getPassword().trim().equals("") || patientSignUpDto.getPassword().equals(null)) {
+        if(patientSignUpDto.getPassword() == null || patientSignUpDto.getPassword().trim().equals("")) {
             throw new MissingPasswordException("Password field is empty");
         }
 
-        if(patientSignUpDto.getConfirmPassword().trim().equals("") || patientSignUpDto.getConfirmPassword().equals(null)) {
+        if(patientSignUpDto.getConfirmPassword() == null || patientSignUpDto.getConfirmPassword().trim().equals("")) {
             throw new MissingPasswordConfirmationException("Confirm field is empty");
         }
     }

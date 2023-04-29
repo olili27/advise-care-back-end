@@ -1,6 +1,7 @@
 package com.example.advise.care.backend.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,6 +28,7 @@ public class User {
     String gender;
 
     @Column(unique = true)
+    @Email(message = "Email should be valid")
     String emailId;
 
     String password;

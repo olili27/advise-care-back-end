@@ -14,5 +14,5 @@ public class UserLoginRequestDto {
 
     String emailId;
 
-    String passWord;
+    String password;
 }
