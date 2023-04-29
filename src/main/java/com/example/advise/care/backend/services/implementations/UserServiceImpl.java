@@ -129,7 +129,7 @@ public class UserServiceImpl implements UserService {
        catch (NumberFormatException e) {
            throw new NumberFormatException("Wrong id format");
        } catch (Exception e) {
-           throw new UserNotFoundException("User no found");
+           throw new UserNotFoundException("User not found");
        }
     }
 }

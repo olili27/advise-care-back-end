@@ -9,7 +9,9 @@ import com.example.advise.care.backend.services.interfaces.DoctorService;
 import com.example.advise.care.backend.transformers.DoctorTransformer;
 import com.example.advise.care.backend.utilities.UserValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class DoctorServiceImpl implements DoctorService {
 
 }
