@@ -3,6 +3,7 @@ package com.example.advise.care.backend.controllers;
 import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
 import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.services.interfaces.PatientService;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,11 @@ public class PatientController {
            PatientSignUpResponseDto patientSignUpResponseDto = patientService.patientSignUp(patientSignUpDto);
 
            return new ResponseEntity<>(patientSignUpResponseDto, HttpStatus.CREATED);
-       } catch (Exception e) {
+       }
+       catch (ConstraintViolationException e) {
+           return new ResponseEntity<>("Email should be valid", HttpStatus.BAD_REQUEST);
+       }
+       catch (Exception e) {
            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
        }
 

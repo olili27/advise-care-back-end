@@ -16,6 +16,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -82,12 +84,17 @@ public class UserServiceImpl implements UserService {
         try {
             User user = userRepository.findByEmailId(emailId);
 
+            String resetToken = UUID.randomUUID().toString();
+
             String subject = "Reset Password";
-            String body = "Please click the following link to reset your password:\n" +  getBaseUrl() + "/user/forgot-password/" + user.getId() + "/reset";
+            String body = "Please click the following link to reset your password:\n" +  getBaseUrl() + "/user/forgot-password/" + user.getId() + "/reset/" + resetToken;
+
+            user.setResetToken(resetToken);
+            userRepository.save(user);
 
             sendEmail(emailId, subject, body);
 
-            return "Password reset instructions sent to " + emailId;
+            return "Password reset instructions sent to " + emailId + " in the spam section.";
         }
         catch (MessagingException e) {
             throw new MessagingException("Failed to send mail");
@@ -98,15 +105,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String resetUserPassword(String id, String newPassword) throws Exception {
+    public String resetUserPassword(String id, String newPassword, String resetToken) throws Exception {
 
        try {
            User user = userRepository.findById(Integer.parseInt(id)).get();
 
+           if(user.getResetToken() == null) return "Reset token expired! Try again";
+
+           int emailLength = user.getEmailId().length();
+           int start = emailLength - "@advisecare.com".length();
+
+           if (user.getEmailId().substring(start).equals("@advisecare.com")) throw  new NotAllowedException("Not allowed! Reach out to admin");
+
            user.setPassword(newPassword);
+           user.setResetToken(null);
            userRepository.save(user);
 
            return "You can now login using your new Password";
+       }
+       catch (NotAllowedException e) {
+           throw new NotAllowedException("Not allowed! Reach out to admin");
        }
        catch (NumberFormatException e) {
            throw new NumberFormatException("Wrong id format");

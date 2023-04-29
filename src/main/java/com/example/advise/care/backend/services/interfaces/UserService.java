@@ -7,5 +7,5 @@ public interface UserService {
     public UserLoginResponseDto userLogin(UserLoginRequestDto userLoginRequestDto) throws Exception;
     public String userForgotPassword(String emailId) throws Exception;
 
-    public String resetUserPassword(String id, String newPassword) throws Exception;
+    public String resetUserPassword(String id, String newPassword, String resetToken) throws Exception;
 }

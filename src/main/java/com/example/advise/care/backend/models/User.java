@@ -35,6 +35,8 @@ public class User {
 
     String imageUrl;
 
+    String resetToken;
+
     @CreationTimestamp
     Date joinedAt;
 
