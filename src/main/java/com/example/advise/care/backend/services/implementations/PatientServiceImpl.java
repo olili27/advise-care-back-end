@@ -1,7 +1,6 @@
 package com.example.advise.care.backend.services.implementations;
 
-import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
-import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
+import com.example.advise.care.backend.dtos.requests.PatientSignUpDto;
 import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.exceptions.*;
 import com.example.advise.care.backend.models.Patient;

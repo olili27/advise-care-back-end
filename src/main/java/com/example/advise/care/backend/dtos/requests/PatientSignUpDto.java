@@ -1,4 +1,4 @@
-package com.example.advise.care.backend.dtos.requests.patient;
+package com.example.advise.care.backend.dtos.requests;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

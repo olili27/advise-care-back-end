@@ -22,8 +22,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
+    @Column(nullable = false)
     String title;
 
+    @Column(nullable = false)
     String body;
 
     String imageUrl;
@@ -32,7 +34,7 @@ public class Post {
     Date createdAt;
 
     @ManyToOne
-    @JoinColumn
+//    @JoinColumn(nullable = false)
     Doctor author;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)

@@ -1,4 +1,4 @@
-package com.example.advise.care.backend.dtos.requests.post;
+package com.example.advise.care.backend.dtos.requests;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Valid
-public class PostDto {
+public class PostRequestDto {
 
     @NotNull(message = "Title cannot be null")
     @NotEmpty(message = "Title cannot be empty")

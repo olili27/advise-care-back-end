@@ -1,6 +1,6 @@
 package com.example.advise.care.backend.controllers;
 
-import com.example.advise.care.backend.dtos.requests.patient.PatientSignUpDto;
+import com.example.advise.care.backend.dtos.requests.PatientSignUpDto;
 import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
 import com.example.advise.care.backend.services.interfaces.PatientService;
 import jakarta.validation.ConstraintViolationException;

@@ -30,7 +30,5 @@ public class PostView {
     @ManyToOne
     @JoinColumn
     Post post;
-
-
 }
 
