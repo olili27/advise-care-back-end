@@ -40,8 +40,8 @@ public class User {
     @CreationTimestamp
     Date joinedAt;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    List<PostView> postViews = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+//    List<PostView> postViews = new ArrayList<>();
 }
 
 

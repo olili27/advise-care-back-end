@@ -15,11 +15,11 @@ public class DoctorController {
     @Autowired
     PostService postService;
 
-    @PostMapping("/{doctorId}/post/create")
-    public ResponseEntity<?> createPost(@PathVariable("doctorId") String doctorId, @RequestBody PostRequestDto postRequestDto) {
+    @PostMapping("/post/create")
+    public ResponseEntity<?> createPost(@RequestBody PostRequestDto postRequestDto) {
 
         try {
-            PostResponseDto postResponseDto = postService.createPost(doctorId, postRequestDto);
+            PostResponseDto postResponseDto = postService.createPost(postRequestDto);
 
             return new ResponseEntity<>(postResponseDto, HttpStatus.CREATED);
         } catch (Exception e) {

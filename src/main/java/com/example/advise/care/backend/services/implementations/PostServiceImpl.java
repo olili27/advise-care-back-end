@@ -28,7 +28,7 @@ public class PostServiceImpl implements PostService {
     PostRepository postRepository;
 
     @Override
-    public PostResponseDto createPost(String doctorId, PostRequestDto postRequestDto) throws Exception {
+    public PostResponseDto createPost(PostRequestDto postRequestDto) throws Exception {
 
         try {
             String imageUrl = null;
@@ -43,14 +43,15 @@ public class PostServiceImpl implements PostService {
                     .body(postRequestDto.getBody())
                     .build();
 
-            Doctor doctor = doctorRepository.findById(Integer.parseInt(doctorId)).get();
-            User user;
+//            Doctor doctor = doctorRepository.findById(Integer.parseInt(doctorId)).get();
+//            User user;
 //            user.
 
 
 
-            post.setAuthor(doctor);
-            doctorRepository.save(doctor);
+//            post.setAuthor(doctor);
+//            doctorRepository.save(doctor);
+            postRepository.save(post);
 
             return PostTransformer.postEntityToPostResponseDto(post);
         } catch (NumberFormatException e) {

@@ -6,7 +6,7 @@ import com.example.advise.care.backend.dtos.responses.PostResponseDto;
 import java.util.List;
 
 public interface PostService {
-    public PostResponseDto createPost(String doctorId, PostRequestDto postRequestDto) throws Exception;
+    public PostResponseDto createPost(PostRequestDto postRequestDto) throws Exception;
 
     public String deletePost(String doctorId, String postId) throws Exception;
 

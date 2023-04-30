@@ -17,7 +17,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto) throws Exception {
 
         try {

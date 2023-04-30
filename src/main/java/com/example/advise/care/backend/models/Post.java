@@ -22,7 +22,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10000)
     String title;
 
     @Column(nullable = false)
@@ -34,7 +34,7 @@ public class Post {
     Date createdAt;
 
     @ManyToOne
-//    @JoinColumn(nullable = false)
+    @JoinColumn
     Doctor author;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
