@@ -1,0 +1,7 @@
+services:
+  - name: advisecare256
+    start_command: java -jar target/my-app.jar
+    build_command: mvn package
+
+    # Other configuration options like ports, env vars, etc.
+    # ...
