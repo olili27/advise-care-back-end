@@ -1,5 +1,8 @@
 services:
   - name: advisecare256
-    buildCommand: ./mvnw package -DskipTests=true
-    startCommand: java -jar target/advise-care-back-end-0.0.1-SNAPSHOT.jar
+    buildCommand: mvn package
+    startCommand: java -jar target/advise-care-back-end-0.0.1-SNAPSHOT.jar --server.port=8080
+    env:
+      JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+      port: 5000
 
