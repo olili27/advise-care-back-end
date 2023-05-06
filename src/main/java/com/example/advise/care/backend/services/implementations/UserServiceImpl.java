@@ -16,6 +16,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -131,6 +133,18 @@ public class UserServiceImpl implements UserService {
        } catch (Exception e) {
            throw new UserNotFoundException("User not found");
        }
+    }
+
+    @Override
+    public List<UserLoginResponseDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserLoginResponseDto> userLoginResponseDtos = new ArrayList<>();
+
+        for (User user: users) {
+            userLoginResponseDtos.add(UserTransformer.userEntityToUserLoginResponseDto(user));
+        }
+
+        return userLoginResponseDtos;
     }
 }
 /*

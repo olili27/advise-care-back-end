@@ -10,12 +10,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
     @Autowired
     UserService userService;
+
+    @GetMapping("get-all")
+    public ResponseEntity<?> getAllUsers() {
+        List<UserLoginResponseDto> userLoginResponseDtos = userService.getAllUsers();
+
+        return new ResponseEntity<>(userLoginResponseDtos, HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto) throws Exception {
