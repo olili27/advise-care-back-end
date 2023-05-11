@@ -115,9 +115,9 @@ public class UserServiceImpl implements UserService {
            if(user.getResetToken() == null) return "Reset token expired! Try again";
 
            int emailLength = user.getEmailId().length();
-           int start = emailLength - "@advisecare.com".length();
+           int start = emailLength - "@advisecare256.com".length();
 
-           if (user.getEmailId().substring(start).equals("@advisecare.com")) throw  new NotAllowedException("Not allowed! Reach out to admin");
+           if (user.getEmailId().substring(start).equals("@advisecare256.com")) throw  new NotAllowedException("Not allowed! Reach out to admin");
 
            user.setPassword(newPassword);
            user.setResetToken(null);

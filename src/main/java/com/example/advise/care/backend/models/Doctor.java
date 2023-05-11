@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-//@Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
