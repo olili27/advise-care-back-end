@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/doctor")
 public class DoctorController {
@@ -40,7 +42,10 @@ public class DoctorController {
         }
     }
 
-
+    @GetMapping("/get-all")
+    public List<DoctorSignUpResponseDto> getAllDoctors() {
+        return doctorService.getAllDoctors();
+    }
 
     @DeleteMapping("/{doctorId}/post/delete/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable("doctorId") String doctorId, String postId) {

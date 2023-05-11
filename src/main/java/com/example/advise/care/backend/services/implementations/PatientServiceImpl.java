@@ -2,6 +2,7 @@ package com.example.advise.care.backend.services.implementations;
 
 import com.example.advise.care.backend.dtos.requests.PatientSignUpDto;
 import com.example.advise.care.backend.dtos.responses.patients.PatientSignUpResponseDto;
+import com.example.advise.care.backend.dtos.responses.user.UserLoginResponseDto;
 import com.example.advise.care.backend.exceptions.*;
 import com.example.advise.care.backend.models.Patient;
 import com.example.advise.care.backend.models.User;
@@ -11,6 +12,9 @@ import com.example.advise.care.backend.transformers.UserTransformer;
 import com.example.advise.care.backend.utilities.UserValidatorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -26,6 +30,10 @@ public class PatientServiceImpl implements PatientService {
     public PatientSignUpResponseDto patientSignUp(PatientSignUpDto patientSignUpDto) throws Exception {
         try{
             UserValidatorUtil.validatePatientSignUpDto(patientSignUpDto);
+
+            Patient patientCheck = patientRepository.findByEmailId(patientSignUpDto.getEmailId());
+
+            if(patientCheck != null) throw new DuplicateEmailException("Email already exits");
 
             UserValidatorUtil.confirmPassword(patientSignUpDto.getPassword(), patientSignUpDto.getConfirmPassword());
 
@@ -54,6 +62,21 @@ public class PatientServiceImpl implements PatientService {
         catch(InvalidPasswordLengthException e) {
            throw new InvalidPasswordLengthException("The password should be of 8 or more characters");
         }
+        catch(DuplicateEmailException e) {
+            throw new DuplicateEmailException("Email already exits");
+        }
+    }
+
+    @Override
+    public List<UserLoginResponseDto> getAllPatients() {
+        List<Patient> patients = patientRepository.findAll();
+        List<UserLoginResponseDto> patientsDtos = new ArrayList<>();
+
+        for(Patient patient: patients) {
+            patientsDtos.add(UserTransformer.userEntityToUserLoginResponseDto(patient));
+        }
+
+        return patientsDtos;
     }
 
     /*
