@@ -19,7 +19,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("get-all")
+    @GetMapping("/get-all")
     public ResponseEntity<?> getAllUsers() {
         List<UserLoginResponseDto> userLoginResponseDtos = userService.getAllUsers();
 
