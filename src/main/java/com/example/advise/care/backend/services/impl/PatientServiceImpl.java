@@ -7,6 +7,7 @@ import com.example.advise.care.backend.models.Patient;
 import com.example.advise.care.backend.repositories.PatientRepository;
 import com.example.advise.care.backend.services.JwtService;
 import com.example.advise.care.backend.services.interfaces.PatientService;
+import com.example.advise.care.backend.transformers.PatientTransformer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,16 +21,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public UserRegisterLoginResponseDto registerPatient(PatientRequestDto patientRequestDto) {
-        Patient patient = Patient.builder()
-                .name(patientRequestDto.getName())
-                .age(patientRequestDto.getAge())
-                .email(patientRequestDto.getEmail())
-                .profilePictureUrl(patientRequestDto.getProfilePictureUrl())
-                .password(passwordEncoder.encode(patientRequestDto.getPassword()))
-                .role(Role.PATIENT)
+        Patient patient = PatientTransformer.patientRequestDtoToPatientEntity(patientRequestDto);
+        patient.setPassword(passwordEncoder.encode(patientRequestDto.getPassword()));
+
+        Patient savedPatient = patientRepository.save(patient);
+        String token = jwtService.generateToken(savedPatient);
+
+        return UserRegisterLoginResponseDto.builder()
+                .token(token)
                 .build();
-
-
-        return null;
     }
 }
