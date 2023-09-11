@@ -17,6 +17,7 @@ public class Patient {
     String email;
     Integer age;
     String password;
+    String profilePictureUrl;
 
     @Enumerated(EnumType.STRING)
     Role role;

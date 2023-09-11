@@ -18,6 +18,7 @@ public class Doctor {
     String email;
     Integer age;
     String password;
+    String profilePictureUrl;
 
     @Enumerated(EnumType.STRING)
     Expertise expertise;
