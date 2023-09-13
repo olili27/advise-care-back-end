@@ -1,7 +1,5 @@
 package com.example.advise.care.backend.services;
 
-import com.example.advise.care.backend.dtos.responses.UserRegisterLoginResponseDto;
-import com.example.advise.care.backend.models.Patient;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,7 +1,6 @@
 package com.example.advise.care.backend.security.config;
 
-import com.example.advise.care.backend.repositories.DoctorRepository;
-import com.example.advise.care.backend.repositories.PatientRepository;
+import com.example.advise.care.backend.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class ApplicationBeans {
     private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
+    private final UserRepository doctorRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
