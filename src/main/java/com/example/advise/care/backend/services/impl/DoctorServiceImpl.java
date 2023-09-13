@@ -3,6 +3,7 @@ package com.example.advise.care.backend.services.impl;
 import com.example.advise.care.backend.dtos.requests.DoctorRequestDto;
 import com.example.advise.care.backend.dtos.requests.UserLoginDto;
 import com.example.advise.care.backend.dtos.responses.UserRegisterLoginResponseDto;
+import com.example.advise.care.backend.models.User;
 import com.example.advise.care.backend.repositories.UserRepository;
 import com.example.advise.care.backend.services.JwtService;
 import com.example.advise.care.backend.services.interfaces.DoctorService;
@@ -14,17 +15,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 public class DoctorServiceImpl implements DoctorService {
-    private final UserRepository doctorRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @Override
     public UserRegisterLoginResponseDto registerDoctor(DoctorRequestDto doctorRequestDto) {
-        Doctor doctor = DoctorTransformer.doctorRequestDtoToDoctorEntity(doctorRequestDto);
+        User doctor = DoctorTransformer.doctorRequestDtoToUserEntity(doctorRequestDto);
         doctor.setPassword(passwordEncoder.encode(doctorRequestDto.getPassword()));
 
-        Doctor savedDoctor = doctorRepository.save(doctor);
+        User savedDoctor = userRepository.save(doctor);
         String token = jwtService.generateToken(savedDoctor);
         return UserRegisterLoginResponseDto.builder()
                 .token(token)
