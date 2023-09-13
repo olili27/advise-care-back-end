@@ -42,7 +42,7 @@ public class PatientServiceImpl implements PatientService {
                )
         );
 
-        var patient = patientRepository.findByEmail(userLoginDto.getEmail()).orElseThrow();
+        var patient = userRepository.findByEmail(userLoginDto.getEmail()).orElseThrow();
         String token = jwtService.generateToken(patient);
 
         return UserRegisterLoginResponseDto.builder().token(token).build();

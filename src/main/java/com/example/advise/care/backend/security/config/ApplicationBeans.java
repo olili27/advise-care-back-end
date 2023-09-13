@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationBeans {
-    private final PatientRepository patientRepository;
+    private final UserRepository userRepository;
     private final UserRepository doctorRepository;
 
     @Bean
@@ -24,28 +24,14 @@ public class ApplicationBeans {
     }
 
     @Bean
-    public UserDetailsService patientUserDetailsService() {
-        return userEmail -> patientRepository.findByEmail(userEmail).orElseThrow();
+    public UserDetailsService userDetailsService() {
+        return userEmail -> userRepository.findByEmail(userEmail).orElseThrow();
     }
 
     @Bean
-    public AuthenticationProvider patientAuthenticationProvider() {
+    public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(patientUserDetailsService());
-        authenticationProvider.setPasswordEncoder(passwordEncoder());
-
-        return authenticationProvider;
-    }
-
-    @Bean
-    public UserDetailsService doctorUserDetailsService() {
-        return userEmail -> doctorRepository.findByEmail(userEmail).orElseThrow();
-    }
-
-    @Bean
-    public AuthenticationProvider doctorAuthenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(doctorUserDetailsService());
+        authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return authenticationProvider;
