@@ -2,6 +2,7 @@ package com.example.advise.care.backend.services;
 
 import com.example.advise.care.backend.dtos.responses.UserRegisterLoginResponseDto;
 import com.example.advise.care.backend.models.Patient;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -12,6 +13,7 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 public class JwtService {
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
@@ -27,6 +29,24 @@ public class JwtService {
                 .setExpiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    public String extractUsername(String jwtToken) {
+        return extractClaim(jwtToken, Claims::getSubject);
+    }
+
+    private <T> T extractClaim(String jwtToken, Function<Claims, T> resolveClaim) {
+        final Claims claims = extractAllClaims(jwtToken);
+
+        return resolveClaim.apply(claims);
+    }
+
+    private Claims extractAllClaims(String jwtToken) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(jwtToken)
+                .getBody();
     }
 
     private Key getSignInKey() {
