@@ -18,7 +18,7 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    String[] whiteList = {"/authentication/**", "authorization/**"};
+    String[] whiteList = {"/authentication/register/**", "authorization/login/**"};
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)

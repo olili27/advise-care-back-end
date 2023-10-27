@@ -16,7 +16,7 @@ public class Post {
     Integer id;
 
     String title;
-    Content content;
+//    Content content;
     Integer numberOfViews;
     Integer numberOfLikes;
     Integer numberOfComments;

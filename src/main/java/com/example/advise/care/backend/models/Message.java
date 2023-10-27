@@ -18,5 +18,5 @@ public class Message {
     @CreationTimestamp
     LocalDate whenItWasSent;
 
-    Content content;
+//    Content content;
 }

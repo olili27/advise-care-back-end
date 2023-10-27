@@ -9,11 +9,15 @@ import com.example.advise.care.backend.services.JwtService;
 import com.example.advise.care.backend.services.interfaces.PatientService;
 import com.example.advise.care.backend.transformers.PatientTransformer;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
+@Service
 @RequiredArgsConstructor
+@Slf4j
 public class PatientServiceImpl implements PatientService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -27,6 +31,8 @@ public class PatientServiceImpl implements PatientService {
 
         User savedPatient = userRepository.save(patient);
         String token = jwtService.generateToken(savedPatient);
+
+        log.info("token for patient: " + token);
 
         return UserRegisterLoginResponseDto.builder()
                 .token(token)

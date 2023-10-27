@@ -17,7 +17,7 @@ public class Comment {
 
     @CreationTimestamp
     LocalDate dateOfCreation;
-    Content content;
+//    Content content;
     Integer numberOfReplies;
     Integer numberOfLikes;
 }
